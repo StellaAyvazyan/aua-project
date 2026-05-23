@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Portfolio</title>
+  <style>
+    :root {
+      --bg: #f7f3ea;
+      --surface: #fffaf2;
+      --surface-alt: #f4ebdc;
+      --text: #3d342c;
+      --muted: #7c6d5f;
+      --primary: #6d8a5b;
+      --primary-dark: #4f6a42;
+      --accent: #d9bfa9;
+      --border: #decfb8;
+      --shadow: 0 10px 24px rgba(98, 79, 56, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Georgia, "Times New Roman", serif;
+      background:
+        radial-gradient(circle at 10% 20%, #f1e7d8 0%, transparent 35%),
+        radial-gradient(circle at 90% 15%, #e8f0e2 0%, transparent 30%),
+        linear-gradient(180deg, #fbf7ef 0%, var(--bg) 45%);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle, rgba(244, 162, 192, 0.6) 0 3.4px, transparent 3.7px) 8% 14% / 170px 170px,
+        radial-gradient(circle, rgba(255, 179, 204, 0.65) 0 3.1px, transparent 3.5px) 72% 26% / 200px 200px,
+        radial-gradient(circle, rgba(240, 146, 186, 0.6) 0 3.3px, transparent 3.7px) 25% 78% / 185px 185px,
+        radial-gradient(circle, rgba(255, 196, 216, 0.7) 0 2.9px, transparent 3.3px) 88% 82% / 210px 210px,
+        radial-gradient(circle, rgba(250, 170, 200, 0.55) 0 2.8px, transparent 3.2px) 45% 52% / 230px 230px;
+      z-index: 0;
+      opacity: 0.95;
+      animation: sparkleTwinkle 3.8s ease-in-out infinite alternate;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle, rgba(255, 224, 238, 0.85) 0 2.4px, transparent 2.8px) 15% 30% / 230px 230px,
+        radial-gradient(circle, rgba(255, 210, 231, 0.8) 0 2.2px, transparent 2.7px) 58% 68% / 250px 250px,
+        radial-gradient(circle, rgba(255, 214, 232, 0.78) 0 2.3px, transparent 2.8px) 82% 18% / 270px 270px;
+      mix-blend-mode: screen;
+      z-index: 0;
+      opacity: 0.62;
+      animation: sparklePulse 2.6s ease-in-out infinite;
+    }
+
+    .star {
+      position: fixed;
+      width: 16px;
+      height: 16px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .star::before,
+    .star::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(255, 188, 217, 0.85);
+      border-radius: 999px;
+      box-shadow: 0 0 12px rgba(255, 170, 206, 0.7);
+    }
+
+    .star::before {
+      width: 3px;
+      height: 16px;
+    }
+
+    .star::after {
+      width: 16px;
+      height: 3px;
+    }
+
+    .star.s1 { top: 16%; left: 18%; animation: starShine 2.2s ease-in-out infinite; }
+    .star.s2 { top: 24%; left: 78%; animation: starShine 2.8s ease-in-out infinite 0.4s; }
+    .star.s3 { top: 58%; left: 35%; animation: starShine 2.4s ease-in-out infinite 0.7s; }
+    .star.s4 { top: 70%; left: 86%; animation: starShine 3s ease-in-out infinite 0.2s; }
+    .star.s5 { top: 84%; left: 12%; animation: starShine 2.6s ease-in-out infinite 0.9s; }
+
+    .dachshund {
+      position: fixed;
+      left: 0;
+      bottom: 14px;
+      width: 136px;
+      height: 52px;
+      pointer-events: none;
+      z-index: 5;
+      animation: walkAcross 24s linear infinite;
+      filter: drop-shadow(0 2px 1px rgba(61, 40, 25, 0.3));
+    }
+
+    .dachshund::after {
+      content: "";
+      position: absolute;
+      left: 24px;
+      bottom: -2px;
+      width: 88px;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(70, 47, 31, 0.25);
+    }
+
+    .dog-body {
+      position: absolute;
+      left: 28px;
+      top: 16px;
+      width: 78px;
+      height: 25px;
+      background: linear-gradient(180deg, #9f6940 0%, #845230 100%);
+      border-radius: 999px 26px 30px 999px;
+      box-shadow: inset -7px -4px 0 rgba(0, 0, 0, 0.14);
+    }
+
+    .dog-body::before {
+      content: "";
+      position: absolute;
+      left: 7px;
+      top: 10px;
+      width: 16px;
+      height: 12px;
+      background: #d2aa7f;
+      border-radius: 58% 42% 55% 45%;
+      opacity: 0.9;
+    }
+
+    .dog-head {
+      position: absolute;
+      right: 12px;
+      top: 10px;
+      width: 32px;
+      height: 23px;
+      background: linear-gradient(180deg, #a16a42 0%, #885332 100%);
+      border-radius: 46% 54% 52% 48%;
+      box-shadow: inset -4px -3px 0 rgba(0, 0, 0, 0.13);
+    }
+
+    .dog-head::before {
+      content: "";
+      position: absolute;
+      left: 4px;
+      top: 5px;
+      width: 10px;
+      height: 16px;
+      background: #6b432d;
+      border-radius: 10px 10px 13px 13px;
+      transform: rotate(18deg);
+    }
+
+    .dog-head::after {
+      content: "";
+      position: absolute;
+      right: 6px;
+      top: 8px;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #2f1b12;
+      box-shadow: 0 0 0 1px rgba(255, 245, 230, 0.45);
+    }
+
+    .dog-snout {
+      position: absolute;
+      right: 2px;
+      top: 16px;
+      width: 14px;
+      height: 10px;
+      background: #c99670;
+      border-radius: 55% 45% 60% 40%;
+      box-shadow: inset -2px -1px 0 rgba(0, 0, 0, 0.08);
+    }
+
+    .dog-snout::after {
+      content: "";
+      position: absolute;
+      right: 1px;
+      top: 3px;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #2e1d14;
+    }
+
+    .dog-tail {
+      position: absolute;
+      left: 18px;
+      top: 15px;
+      width: 14px;
+      height: 5px;
+      background: #73482d;
+      border-radius: 0 999px 999px 0;
+      transform-origin: left center;
+      animation: tailWag 0.55s ease-in-out infinite alternate;
+    }
+
+    .leg {
+      position: absolute;
+      bottom: 0;
+      width: 8px;
+      height: 18px;
+      background: #6c432b;
+      border-radius: 5px;
+      transform-origin: top center;
+      animation: legStep 0.75s ease-in-out infinite alternate;
+    }
+
+    .leg.l1 { left: 40px; }
+    .leg.l2 { left: 58px; animation-delay: 0.35s; }
+    .leg.l3 { left: 79px; }
+    .leg.l4 { left: 98px; animation-delay: 0.35s; }
+
+    @keyframes sparkleTwinkle {
+      0% {
+        opacity: 0.62;
+        filter: brightness(1);
+      }
+      50% {
+        opacity: 1;
+        filter: brightness(1.55);
+      }
+      100% {
+        opacity: 0.72;
+        filter: brightness(1.1);
+      }
+    }
+
+    @keyframes sparklePulse {
+      0%, 100% {
+        opacity: 0.35;
+        filter: brightness(1);
+      }
+      50% {
+        opacity: 0.9;
+        filter: brightness(1.8);
+      }
+    }
+
+    @keyframes starShine {
+      0%, 100% {
+        opacity: 0.45;
+        transform: scale(0.95);
+        filter: brightness(1);
+      }
+      50% {
+        opacity: 1;
+        transform: scale(1.35);
+        filter: brightness(2);
+      }
+    }
+
+    @keyframes walkAcross {
+      0% {
+        transform: translateX(-160px) scaleX(1);
+      }
+      49.9% {
+        transform: translateX(calc(100vw - 24px)) scaleX(1);
+      }
+      50% {
+        transform: translateX(calc(100vw - 24px)) scaleX(-1);
+      }
+      100% {
+        transform: translateX(-160px) scaleX(-1);
+      }
+    }
+
+    @keyframes legStep {
+      0% {
+        transform: rotate(16deg) translateY(0);
+      }
+      100% {
+        transform: rotate(-16deg) translateY(1px);
+      }
+    }
+
+    @keyframes tailWag {
+      0% {
+        transform: rotate(-20deg);
+      }
+      100% {
+        transform: rotate(20deg);
+      }
+    }
+
+    .container {
+      width: min(960px, 92%);
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    header {
+      padding: 2.5rem 0 1rem;
+    }
+
+    .hero {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      padding: 2rem;
+      display: grid;
+      gap: 0.9rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "❀";
+      position: absolute;
+      right: 1rem;
+      bottom: 0.7rem;
+      font-size: 1.7rem;
+      color: var(--accent);
+      opacity: 0.85;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 0.3rem 0.75rem;
+      border-radius: 999px;
+      background: #ecdfcd;
+      color: #6d5847;
+      font-size: 0.85rem;
+      font-weight: 600;
+      width: fit-content;
+      border: 1px solid #dcc9b0;
+      letter-spacing: 0.02em;
+    }
+
+    h1, h2 {
+      line-height: 1.25;
+    }
+
+    h1 {
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      color: #4a3f34;
+      font-weight: 700;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      max-width: 65ch;
+      font-size: 1.05rem;
+    }
+
+    main {
+      padding: 1rem 0 3rem;
+      display: grid;
+      gap: 1.25rem;
+    }
+
+    section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      padding: 1.5rem;
+    }
+
+    .section-title {
+      margin-bottom: 0.75rem;
+      font-size: 1.35rem;
+      color: #5a4a3d;
+    }
+
+    .project-card {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1rem;
+      background: linear-gradient(180deg, var(--surface-alt) 0%, #fbf5ea 100%);
+    }
+
+    .project-meta {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin: 0.35rem 0 0.75rem;
+      font-style: italic;
+    }
+
+    .project-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 0.75rem;
+    }
+
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      padding: 0.55rem 0.9rem;
+      border-radius: 10px;
+      font-size: 0.92rem;
+      border: 1px solid var(--border);
+      color: var(--text);
+      background: #fff7eb;
+      transition: 0.2s ease;
+    }
+
+    .btn.primary {
+      background: var(--primary);
+      color: #f9f6ee;
+      border-color: var(--primary);
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 15px rgba(90, 75, 58, 0.16);
+    }
+
+    .btn.primary:hover {
+      background: var(--primary-dark);
+      border-color: var(--primary-dark);
+    }
+
+    .empty-folder {
+      margin-top: 0.45rem;
+      padding: 0.8rem 1rem;
+      border-radius: 12px;
+      border: 1px dashed #cab79e;
+      background: #f9f1e4;
+      color: #6e5f50;
+      font-style: italic;
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.9rem;
+      padding: 0.5rem 0 2.5rem;
+    }
+
+    @media (max-width: 640px) {
+      .hero, section {
+        padding: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <span class="star s1" aria-hidden="true"></span>
+  <span class="star s2" aria-hidden="true"></span>
+  <span class="star s3" aria-hidden="true"></span>
+  <span class="star s4" aria-hidden="true"></span>
+  <span class="star s5" aria-hidden="true"></span>
+  <div class="dachshund" aria-hidden="true">
+    <span class="dog-tail"></span>
+    <span class="dog-body"></span>
+    <span class="dog-head"></span>
+    <span class="dog-snout"></span>
+    <span class="leg l1"></span>
+    <span class="leg l2"></span>
+    <span class="leg l3"></span>
+    <span class="leg l4"></span>
+  </div>
+
+  <header class="container">
+    <div class="hero">
+      <span class="tag">Student Portfolio</span>
+      <h1>Hi, I am Stella Ayvazyan</h1>
+      <p class="subtitle">
+        I am a student passionate about web development, problem solving, and learning by building practical projects.
+        This page highlights my main project and organized homework work.
+      </p>
+    </div>
+  </header>
+
+  <main class="container">
+    <section>
+      <h2 class="section-title">Featured Project</h2>
+      <article class="project-card">
+        <h3>Sorting Visualizer</h3>
+        <p class="project-meta">Tech: Java</p>
+        <p>
+          A Java console project that demonstrates sorting algorithms with step-by-step output,
+          including comparisons and swaps/moves for better algorithm understanding.
+        </p>
+        <div class="project-links">
+          <a class="btn primary" href="Project/SortingVisualizer.java" target="_blank" rel="noopener noreferrer">Open Project File</a>
+        </div>
+      </article>
+    </section>
+
+    <section>
+      <h2 class="section-title">Homework Folder</h2>
+      <p class="empty-folder">Homework folder is currently empty.</p>
+    </section>
+  </main>
+
+  <footer class="container">
+    <p>&copy; 2026 Stella Ayvazyan. Student Portfolio.</p>
+  </footer>
+</body>
+</html>
