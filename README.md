@@ -1,6 +1,6 @@
 # Sorting Visualizer
 
-A console-based Java tool that visualizes sorting algorithms step by step using ASCII bar charts, with real-time comparison and swap counters.
+A console-based C program that visualizes sorting algorithms step by step using ASCII bar charts, with real-time comparison and swap counters.
 
 ## Overview
 
@@ -8,16 +8,16 @@ This program lets you watch how Bubble Sort, Insertion Sort, Merge Sort, and Qui
 
 ## How to Run
 
-**Requirements:** Java JDK 8 or later
+**Requirements:** A C99-compatible compiler (e.g., gcc)
 
 **1. Compile**
 ```bash
-javac SortingVisualizer.java
+gcc SortingVisualizer.c -o SortingVisualizer
 ```
 
 **2. Run**
 ```bash
-java SortingVisualizer
+./SortingVisualizer
 ```
 
 **3. Follow the prompts**
@@ -42,6 +42,11 @@ The visualization will print to the console automatically.
 | 2 | Insertion Sort | O(n²) |
 | 3 | Merge Sort | O(n log n) |
 | 4 | Quick Sort | O(n log n) avg |
+
+## Notes
+
+- Maximum array size is 100 elements
+- Input values must be positive integers for the bar chart to render correctly
 
 ## Example Output
 
